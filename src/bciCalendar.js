@@ -220,35 +220,41 @@
         var height;
 
         // add data points to calendar
-        for (var i = 0; i < viewModel.dataPoints.length; i++) {
-            var dataPoint = viewModel.dataPoints[i];
-            var dataValue = dataPoint.value;
-            var dataLabel = dataPoint.valueText;
-            var date = new Date(dataPoint.category);
-            var year = date.getFullYear();
-            var month = date.getMonth();
-            var day = date.getDate();
-            var id = className + '-' + year.toString() + month.toString() + day.toString();
-            var td = d3.select('#' + id)
-            td.style('background-color', getColor(dataValue));
+        for (var i = 0; i < weeks.length; i++) {
+            var week = weeks[i];
+            for (var j = 0; j < week.length; j++) {
+                var day = week[j];
+                var dataPoint = day.data;
+                if (!day.data) 
+                { 
+                    continue; 
+                }
+                var dataValue = dataPoint.value;
+                var dataLabel = dataPoint.valueText;
+                var date = new Date(dataPoint.category);
+                var year = date.getFullYear();
+                var month = date.getMonth();
+                var day = date.getDate();
+                var id = className + '-' + year.toString() + month.toString() + day.toString();
+                var td = d3.select('#' + id)
+                td.style('background-color', getColor(dataValue));
 
-            height = height || td.node().getBoundingClientRect().height;
-
-            if (settings.dataLabels.show && !isNaN(dataValue)) {
-                d3.select('#' + id + ' .' + className + '-parent')
-                    .append('div')
-                    .attr('class', className + '-dataLabel')
-                    .style({
-                        'color': settings.dataLabels.fontColor.solid.color,
-                        'font-size': settings.dataLabels.textSize + 'px',
-                        'font-weight': settings.dataLabels.fontWeight,
-                        'text-align': settings.dataLabels.alignment,
-                        'height': parseInt(settings.dataLabels.textSize) + (parseInt(settings.dataLabels.textSize) * .5) + '%'
-                    })
-                    .text(dataLabel);
+                height = height || td.node().getBoundingClientRect().height;
+                if (settings.dataLabels.show && !isNaN(dataValue)) {
+                    d3.select('#' + id + ' .' + className + '-parent')
+                        .append('div')
+                        .attr('class', className + '-dataLabel')
+                        .style({
+                            'color': settings.dataLabels.fontColor.solid.color,
+                            'font-size': settings.dataLabels.textSize + 'px',
+                            'font-weight': settings.dataLabels.fontWeight,
+                            'text-align': settings.dataLabels.alignment,
+                            'height': parseInt(settings.dataLabels.textSize) + (parseInt(settings.dataLabels.textSize) * .5) + '%'
+                        })
+                        .text(dataLabel);
+                }
             }
         }
-
     }
 
     function noData (calendar, message) {

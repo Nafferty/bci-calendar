@@ -227,9 +227,11 @@ module powerbi.extensibility.visual {
         let objects = dataViews[0].metadata.objects;
         let colorPalette: IColorPalette = host.colorPalette;
         let calendarDataPoints: CalendarDataPoint[] = [];
-        let firstDate: Date = new Date(<any>(category.values[0] || category.values[1]));
+
+        let firstDate: Date = new Date();
         let month: number = firstDate.getMonth();
         let year: number = firstDate.getFullYear();
+        
         let tabledata = dataViews[0].table.rows; // used for tooltips
         let calendarSettings: CalendarSettings = {
             monthYearDisplay: getValue<string>(objects, 'calendar', 'monthYearDisplay', defaultSettings.monthYearDisplay),
