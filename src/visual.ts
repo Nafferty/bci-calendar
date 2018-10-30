@@ -228,8 +228,7 @@ module powerbi.extensibility.visual {
         let colorPalette: IColorPalette = host.colorPalette;
         let calendarDataPoints: CalendarDataPoint[] = [];
         
-        console.log("Finding highest date");
-        var categorySortedByDate = category.values.sort((a, b) => {
+        var categorySortedByDate = category.values.slice(0).sort((a, b) => {
             var dateA = new Date(<any>a);
             var dateB = new Date(<any>b);
 
@@ -248,9 +247,7 @@ module powerbi.extensibility.visual {
         } catch (ex) {
             console.log("Failed to find highest date, setting to current date")
             highestDate = new Date();
-        }
-        
-        console.log("Found: " + highestDate);
+        }        
 
         let firstDate: Date = highestDate;
         let month: number = firstDate.getMonth();
